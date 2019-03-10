@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import Remarkable from 'remarkable';
 
 class ItemList extends Component {
+    getRawMarkup(raw) {
+        const md = new Remarkable();
+        return { __html:md.render(raw)};
+    }
     render() {
         return (
             <ul>
@@ -8,7 +13,7 @@ class ItemList extends Component {
                     // console.log("cur id" ,item.id)
                     return <li key={item.id}>
                                 <div>
-                                    {item.text}
+                                    <div dangerouslySetInnerHTML={this.getRawMarkup(item.text)}></div>
                                     <button onClick={this.props.handleRemove} id={item.id}>X</button>
                                 </div>
                             </li>
